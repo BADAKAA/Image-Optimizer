@@ -1,0 +1,80 @@
+:root {
+  --border-radius: 8px;
+}
+* {
+  font-family: 'Inter',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+body {
+  margin: 0;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap:2rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+}
+form button {
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  color: white;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  min-width: 200px;
+  border: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: light;
+  background-color: #62bbc1;
+}
+button {
+  opacity: 0.75;
+  transition: opacity 0.3s;
+}
+button:hover:not(:active) {
+  opacity: 1;
+}
+
+
+
+
+#imgToCompress {
+  display: none;
+}
+
+.picture {
+  width: 400px;
+  aspect-ratio: 16/9;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  border: 2px dashed currentcolor;
+  cursor: pointer;
+  transition: color 300ms ease-in-out, background-color 300ms ease-in-out;
+  outline: none;
+  overflow: hidden;
+}
+
+.picture:hover {
+  color: #777;
+  background-color: #ccc;
+}
+
+.picture:active {
+  border-color: turquoise;
+  background-color: turquoise;
+  background: #eee;
+}
+
+.picture:focus {
+  color: #777;
+  background-color: #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.picture__img {
+  max-width: 100%;
+}
