@@ -1,26 +1,16 @@
 const inputFile = document.querySelector("#imgToCompress");
-const pictureImage = document.querySelector(".picture__image");
-const pictureImageTxt = "Choose an image";
-pictureImage.innerHTML = pictureImageTxt;
+const previewImage = document.querySelector(".preview-img");
 
 inputFile.addEventListener("change", function (e) {
   const inputTarget = e.target;
   const file = inputTarget.files[0];
 
-  if (!file) return     pictureImage.innerHTML = pictureImageTxt;
-
+  if (!file) return;
   const reader = new FileReader();
-
   reader.addEventListener("load", function (e) {
     const readerTarget = e.target;
-
-    const img = document.createElement("img");
-    img.src = readerTarget.result;
-    img.classList.add("picture__img");
-
-    pictureImage.innerHTML = "";
-    pictureImage.appendChild(img);
+    previewImage.src = readerTarget.result;
+    document.body.classList.toggle("has-preview",true);
   });
-
   reader.readAsDataURL(file);
 });
