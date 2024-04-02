@@ -13,7 +13,13 @@ $message = '';
 
 function validateUpload(): array {
 
+  if (!isset($_FILES["imgToCompress"]) || !$_FILES["imgToCompress"]['name']) {
+    header("Location: " . $_POST['referrer'] ?? '/');
+    exit();
+  }
+
   $FILE = $_FILES["imgToCompress"];
+
   $tmpPath = $FILE["tmp_name"];
   $originalName = basename($FILE["name"]);
   $imageFileType = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
@@ -52,11 +58,10 @@ function downloadFile() {
   } catch (Exception $e) {
     global $message;
     $message = $e->getMessage();
-    // header("Location: ". $_POST['referrer']??'/');
-    // exit();
   }
 }
 downloadFile();
+
 ?>
 
 <!DOCTYPE html>
