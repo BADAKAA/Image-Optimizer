@@ -1,0 +1,14 @@
+{
+  "name": "image-compressor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "w":"sass --watch ./style:./"
+  },
+  "author": "",
+  "license": "ISC"
+}
