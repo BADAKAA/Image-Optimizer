@@ -14,10 +14,10 @@ $message = '';
 function validateUpload(): array {
 
   if (!isset($_FILES["imgToCompress"]) || !$_FILES["imgToCompress"]['name']) {
-    header("Location: " . $_POST['referrer'] ?? '/');
+    $redirectUrl = $_POST['referrer'] ?? '/';
+    header("Location: " . $redirectUrl);
     exit();
   }
-
   $FILE = $_FILES["imgToCompress"];
 
   $tmpPath = $FILE["tmp_name"];
@@ -26,15 +26,15 @@ function validateUpload(): array {
 
   if (!getimagesize($tmpPath)) throw new Exception("File is not an image.", 418);
 
-  // if (file_exists($targetPath)) throw new Exception("Sorry, this file already exists.",409);
-
+  
   if ($FILE["size"] > MAX_FILE_SIZE_MB * 1000000) throw new Exception("Sorry, your file is too large.", 413);
-
+  
   if (!in_array($imageFileType, ALLOWED_FORMATS)) throw new Exception("Sorry, only the following formats are allowed:" . implode(', ', ALLOWED_FORMATS), 415);
-
+  
   if (KEEP_ORIGINAL) {
     $target_dir = "uploads/";
     $targetPath = $target_dir . $originalName;
+    // if (file_exists($targetPath)) throw new Exception("Sorry, this file already exists.",409);
     if (!move_uploaded_file($tmpPath, $targetPath)) throw new Exception("Sorry, there has been an error.", 500);
   }
   return [$tmpPath, $originalName];
@@ -46,7 +46,7 @@ function downloadFile() {
     [$uncompressedPath, $displayName] = validateUpload();
     $compressedPath = ImageService::resize_image($uncompressedPath, 800, 800, 'jpg', './compressed/' . time());
     $fileSize = filesize($compressedPath);
-    // Output headers.
+
     header("Cache-Control: private");
     header("Content-Type: application/stream");
     header("Content-Length: " . $fileSize);
