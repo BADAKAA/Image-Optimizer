@@ -14,7 +14,8 @@
   overflow: hidden;
 }
 .picture {
-  width: min(800px,calc(100vw - 1em));
+  padding: 2em;
+  width: min(800px,calc(100vw - 2em));
   max-height: 75vh;
   min-height: 300px;
   @media screen and (min-width:1000px) {
@@ -23,12 +24,16 @@
 }
 .preview-img {
   width: auto;
+  max-width: calc(100vw - 2em);
   display: none;
   max-height: 50vh;
 }
+.preview-label { display: none;}
+
 body.has-preview {
   .preview-img { display: flex; }
   .picture { display: none;}
+  .preview-label { display: block;}
 }
 .picture::before {
   content: '';

@@ -1,13 +1,10 @@
 <?php
 
-use App\Services\ImageService;
+use Services\ImageService;
 
-require_once './Services/ImageService.php';
+require_once '../config.php';
+require_once './ImageService.php';
 
-const ALLOWED_FORMATS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
-
-const MAX_FILE_SIZE_MB = 1000;
-const KEEP_ORIGINAL = false;
 
 $message = '';
 
@@ -26,7 +23,6 @@ function validateUpload(): array {
 
   if (!getimagesize($tmpPath)) throw new Exception("File is not an image.", 418);
 
-  
   if ($FILE["size"] > MAX_FILE_SIZE_MB * 1000000) throw new Exception("Sorry, your file is too large.", 413);
   
   if (!in_array($imageFileType, ALLOWED_FORMATS)) throw new Exception("Sorry, only the following formats are allowed:" . implode(', ', ALLOWED_FORMATS), 415);
@@ -37,14 +33,32 @@ function validateUpload(): array {
     // if (file_exists($targetPath)) throw new Exception("Sorry, this file already exists.",409);
     if (!move_uploaded_file($tmpPath, $targetPath)) throw new Exception("Sorry, there has been an error.", 500);
   }
+
   return [$tmpPath, $originalName];
+}
+
+
+function getFileDimesions($path) {
+  $imgsize = getimagesize($path);
+  $width = $imgsize[0];
+  $height = $imgsize[1];
+  $maxWidth = max(1,$_POST['max-width'] ?? 1);  // prevent division by 0
+  $maxHeight = max(1,$_POST['max-height'] ?? 1); 
+
+  $heightAdjustment = min(1,$maxHeight/$height);
+  $widthAdjustment = min(1,$maxWidth/$width);
+  $adjustment = min($widthAdjustment, $heightAdjustment);
+  
+
+  return [$width * $adjustment, $height * $adjustment];
 }
 
 
 function downloadFile() {
   try {
     [$uncompressedPath, $displayName] = validateUpload();
-    $compressedPath = ImageService::resize_image($uncompressedPath, 800, 800, 'jpg', './compressed/' . time());
+    [$width, $height] = getFileDimesions($uncompressedPath);
+    $compressedPath = ImageService::resize_image($uncompressedPath, $width, $height, 'jpg', './compressed/' . time());
     $fileSize = filesize($compressedPath);
 
     header("Cache-Control: private");

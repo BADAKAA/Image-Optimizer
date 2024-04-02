@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace Services;
 
-use Error;
+use Exception;
 
 class ImageService {
     static private function replace_extension($filename, $new_extension) {
@@ -26,7 +26,7 @@ class ImageService {
             'image/avif' => imagecreatefromavif($file_path),
             'image/webp' => imagecreatefromwebp($file_path),
             'image/jpeg', 'image/jpg' => imagecreatefromjpeg($file_path),
-            default => throw new Error('Filetype unsupported', 417)
+            default => throw new Exception('Filetype unsupported', 417)
         };
         $dst_img = imagecreatetruecolor($w, $h);
         $width_new = $height * $w / $h;

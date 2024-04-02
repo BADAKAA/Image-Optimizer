@@ -1,8 +1,8 @@
-form button {
+form button, input {
   cursor: pointer;
   color: white;
   background-color: var(--button-color);
-  font-weight: 400;
+  font-weight: 500;
   border-radius: calc(var(--border-radius)*0.5);
   padding: 1em 2em 1em 2em;
   border: none;
