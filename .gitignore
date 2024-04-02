@@ -2,3 +2,5 @@ node_modules
 compressed
 uploads
 vendor
+style.css
+style.css.map
