@@ -2,7 +2,7 @@
 
 use Services\ImageService;
 
-require_once '../config.php';
+require_once './config.php';
 require_once './ImageService.php';
 
 
@@ -27,14 +27,10 @@ function validateUpload(): array {
   
   if (!in_array($imageFileType, ALLOWED_FORMATS)) throw new Exception("Sorry, only the following formats are allowed:" . implode(', ', ALLOWED_FORMATS), 415);
   
-  if (KEEP_ORIGINAL) {
-    $target_dir = "uploads/";
-    $targetPath = $target_dir . $originalName;
-    // if (file_exists($targetPath)) throw new Exception("Sorry, this file already exists.",409);
-    if (!move_uploaded_file($tmpPath, $targetPath)) throw new Exception("Sorry, there has been an error.", 500);
-  }
-
-  return [$tmpPath, $originalName];
+  $target_dir = "uploads/";
+  $targetPath = $target_dir . $originalName;
+  if (!move_uploaded_file($tmpPath, $targetPath)) throw new Exception("Sorry, there has been an error.", 500);
+  return [$targetPath, $originalName];
 }
 
 
@@ -68,6 +64,8 @@ function downloadFile() {
 
     readfile($compressedPath);
     unlink($compressedPath);
+    if (!KEEP_ORIGINAL) unlink($uncompressedPath);
+
     exit();
   } catch (Exception $e) {
     global $message;

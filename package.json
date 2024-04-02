@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "w":"sass --watch ./style:./"
+    "w":"sass --watch ./style:./ --style compressed"
   },
   "author": "",
   "license": "ISC"
