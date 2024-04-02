@@ -1,0 +1,15 @@
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5em;
+}
+footer a {
+  display: inline-block;
+  text-decoration: none;
+  color: grey;
+  font-size: 0.75rem;
+}

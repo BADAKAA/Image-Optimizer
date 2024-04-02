@@ -1,0 +1,21 @@
+label,#copy-icon,button,#reset-button  {
+  cursor: pointer;
+}
+i {
+  user-select: none;
+}
+.italic {
+  font-style: italic;
+}
+h1,h2,h3,h4,h5, button {
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+h1 {
+  font-weight: 800;
+  font-size: 3.5rem;
+  text-align: center;
+  user-select: none;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: clamp(2rem, 2rem + ((1vw - 0.2rem) * 3), 4rem);
+}
