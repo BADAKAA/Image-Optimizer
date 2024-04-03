@@ -5,7 +5,7 @@ namespace Services;
 use Exception;
 
 class ImageService {
-    static private function replace_extension($filename, $new_extension) {
+    static public function replace_extension($filename, $new_extension) {
         $info = pathinfo($filename);
         return ($info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '')
             . $info['filename']
@@ -38,13 +38,14 @@ class ImageService {
             $w_point = (($width - $width_new) / 2);
             imagecopyresampled($dst_img, $src_img, 0, 0, $w_point, 0, $w, $h, $width_new, $height);
         }
-        if ($target_format === 'webp') {
-            $output = self::replace_extension($target_path ?? $file_path, 'webp');
-            imagewebp($dst_img, $output, $quality);
-        } else {
-            $output = self::replace_extension($target_path ?? $file_path, 'jpg');
-            imagejpeg($dst_img, $output, $quality);
-        }
+        
+        $output = self::replace_extension($target_path ?? $file_path, $target_format);
+
+        match ($target_format) {
+            'webp' =>  imagewebp($dst_img, $output, $quality),
+            'png' =>  imagepng($dst_img, $output, $quality),
+            default => imagejpeg($dst_img, $output, $quality)
+        };
 
         if ($dst_img) imagedestroy($dst_img);
         if ($src_img) imagedestroy($src_img);

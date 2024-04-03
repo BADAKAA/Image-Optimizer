@@ -15,7 +15,7 @@
     flex-wrap: wrap;
     gap: 0.5em;
     > * {
-      flex: 1 1 200px;
+      flex: 1 1 100px;
       display: flex;
       flex-direction: column;
     }
@@ -25,9 +25,12 @@
       margin-bottom: 0.2em;
     }
   }
-  input {
+  input,select {
     background-color: white;
     color: black;
+  }
+  select {
+    border-right: 1em solid transparent;
   }
   button {
     width: 100%;

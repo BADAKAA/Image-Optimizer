@@ -24,9 +24,9 @@ function validateUpload(): array {
   if (!getimagesize($tmpPath)) throw new Exception("File is not an image.", 418);
 
   if ($FILE["size"] > MAX_FILE_SIZE_MB * 1000000) throw new Exception("Sorry, your file is too large.", 413);
-  
+
   if (!in_array($imageFileType, ALLOWED_FORMATS)) throw new Exception("Sorry, only the following formats are allowed:" . implode(', ', ALLOWED_FORMATS), 415);
-  
+
   $target_dir = "uploads/";
   $targetPath = $target_dir . $originalName;
   if (!move_uploaded_file($tmpPath, $targetPath)) throw new Exception("Sorry, there has been an error.", 500);
@@ -38,13 +38,13 @@ function getFileDimesions($path) {
   $imgsize = getimagesize($path);
   $width = $imgsize[0];
   $height = $imgsize[1];
-  $maxWidth = max(1,$_POST['max-width'] ?? 1);  // prevent division by 0
-  $maxHeight = max(1,$_POST['max-height'] ?? 1); 
+  $maxWidth = max(1, $_POST['max-width'] ?? 1);  // prevent division by 0
+  $maxHeight = max(1, $_POST['max-height'] ?? 1);
 
-  $heightAdjustment = min(1,$maxHeight/$height);
-  $widthAdjustment = min(1,$maxWidth/$width);
+  $heightAdjustment = min(1, $maxHeight / $height);
+  $widthAdjustment = min(1, $maxWidth / $width);
   $adjustment = min($widthAdjustment, $heightAdjustment);
-  
+
 
   return [$width * $adjustment, $height * $adjustment];
 }
@@ -54,13 +54,14 @@ function downloadFile() {
   try {
     [$uncompressedPath, $displayName] = validateUpload();
     [$width, $height] = getFileDimesions($uncompressedPath);
-    $compressedPath = ImageService::resize_image($uncompressedPath, $width, $height, 'jpg', './compressed/' . time());
+    $format = $_POST['format'] ?? DEFAULT_FORMAT;
+    $compressedPath = ImageService::resize_image($uncompressedPath, $width, $height, $format, './compressed/' . time());
     $fileSize = filesize($compressedPath);
 
     header("Cache-Control: private");
     header("Content-Type: application/stream");
     header("Content-Length: " . $fileSize);
-    header("Content-Disposition: attachment; filename=" . $displayName);
+    header("Content-Disposition: attachment; filename=" . ImageService::replace_extension($displayName,$format));
 
     readfile($compressedPath);
     unlink($compressedPath);

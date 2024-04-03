@@ -34,6 +34,15 @@
           <span class="description">Max Height</span>
           <input type="number" value="<?= DEFAULT_MAX_HEIGHT; ?>" name="max-height">
         </div>
+        <div>
+          <span class="description">Format</span>
+          <select name="format" id="">
+            <?php foreach (OUTPUT_FORMATS as $format) {?>
+              <option value="<?= $format ?>" <?= ($format===DEFAULT_FORMAT) ? 'selected':''?>><?= $format?></option>
+            <?php } ?>
+
+          </select>
+        </div>
       </div>
       <button type="submit">Compress</button>
     </div>
