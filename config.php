@@ -8,7 +8,7 @@ const OUTPUT_DIR = './cache';
 const UPLOAD_DIR = './uploads';
 
 const QUALITY = 70;
-const MAX_FILE_SIZE_MB = 500;
+const MAX_FILE_SIZE_MB = 100;
 const KEEP_ORIGINAL = true;
 const KEEP_COMPRESSED = true;
 
