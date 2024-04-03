@@ -27,7 +27,7 @@ function validateUpload(): array {
   if (!in_array($imageFileType, ALLOWED_FORMATS)) throw new Exception("Sorry, only the following formats are allowed:" . implode(', ', ALLOWED_FORMATS), 415);
 
   if (!is_dir(UPLOAD_DIR)) mkdir(UPLOAD_DIR);
-  $targetPath = UPLOAD_DIR . $originalName;
+  $targetPath = UPLOAD_DIR .'/'. $originalName;
   if (!move_uploaded_file($tmpPath, $targetPath)) throw new Exception("Sorry, there has been an error.", 500);
   return [$targetPath, $originalName];
 }
@@ -52,7 +52,7 @@ function downloadFile() {
     [$uncompressedPath, $displayName] = validateUpload();
     [$width, $height] = getFileDimesions($uncompressedPath);
     $format = $_POST['format'] ?? DEFAULT_FORMAT;
-    $compressedPath = ImageService::resize_image($uncompressedPath, $width, $height, $format, OUTPUT_DIR . '/' . time());
+    $compressedPath = ImageService::resize_image($uncompressedPath, $width, $height, $format, OUTPUT_DIR . '/' . time(),QUALITY);
     $fileSize = filesize($compressedPath);
 
     header("Cache-Control: private");
