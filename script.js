@@ -5,7 +5,7 @@ function readFile(e) {
   const inputTarget = e.target;
   const file = inputTarget.files[0];
 
-  if (!file) return;
+  if (!file) return document.body.classList.toggle("has-preview",false);
   const reader = new FileReader();
   reader.addEventListener("load", function (e) {
     const readerTarget = e.target;
