@@ -19,5 +19,16 @@ label {
 }
 
 #imgToCompress {
-  display: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.dropzone {
+  position: relative;
+  transition: transform 300ms;
+}
+body.dragover {
+  .dropzone {
+    transform: scale(1.01);
+  }
 }
