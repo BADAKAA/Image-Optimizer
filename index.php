@@ -55,7 +55,7 @@ require_once './config.php';
   </form>
   <footer>
     <a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icon created by Freepik - Flaticon</a>
-    <a href="https://agbere.com/impressum">Imprint</a>
+    <a href="https://agbere.com/imprint">Imprint</a>
   </footer>
 </body>
 
