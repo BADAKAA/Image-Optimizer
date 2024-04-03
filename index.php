@@ -21,6 +21,7 @@
     <label class="picture" for="imgToCompress">
       <img class="icon" src="./assets/img/picture.png" alt="" aria-hidden="true">
       <p>Drop images here or <em>browse</em></p>
+      <small>Supported formats: <?= implode(', ',ALLOWED_FORMATS) ?></small>
     </label>
     <input type="file" name="imgToCompress" id="imgToCompress">
     <input type="hidden" name="referrer" value="<?= $_SERVER['REQUEST_URI'] ?>">
@@ -48,7 +49,7 @@
     </div>
   </form>
   <footer>
-    <a  href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by Freepik - Flaticon</a>
+    <a  href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icon created by Freepik - Flaticon</a>
     <a href="https://agbere.com/impressum">Imprint</a>
   </footer>
 </body>
