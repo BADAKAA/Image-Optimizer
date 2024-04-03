@@ -1,7 +1,5 @@
 <?php
 
-namespace Services;
-
 use Exception;
 
 class ImageService {
